@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { CloseOutlined } from '@ant-design/icons';
-import { Button, Card, Form, Input, Space, Typography, Select } from 'antd';
+import { Button, Form, Input} from 'antd';
 import playsService from '../services/playapi';
 
 const formItemLayout = {
