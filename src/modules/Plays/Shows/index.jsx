@@ -4,9 +4,6 @@ import playsService from '../../../services/playapi'
 import { useParams } from 'react-router-dom'
 import CreateShow from '../../../components/createShow'
 
-
-
-
 function ListShows() {
   const { id } = useParams()
   const [play, setPlay] = useState()
