@@ -16,7 +16,7 @@ function Plays({data}) {
       <Link to={`/plays/edit/${play._id}`}>
         <Button>Editar</Button>
       </Link>
-      <Link to="/usuarios" onClick={()=>playsService.deletePlay(play._id).then(() => {
+      <Link to="/admin" onClick={()=>playsService.deletePlay(play._id).then(() => {
             // Eliminación exitosa, recargar la página
             window.location.reload();
         })}>

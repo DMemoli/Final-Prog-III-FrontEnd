@@ -12,7 +12,7 @@ function Users({data}) {
       <Link to={`/admin/editar/${user._id}`}>
         <Button>Editar</Button>
       </Link>
-      <Link to="/usuarios" onClick={()=>usersService.deleteUser(user._id).then(() => {
+      <Link to="/admin" onClick={()=>usersService.deleteUser(user._id).then(() => {
             // Eliminación exitosa, recargar la página
             window.location.reload();
         })}>
