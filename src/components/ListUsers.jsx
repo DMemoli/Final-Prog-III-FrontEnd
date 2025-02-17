@@ -9,7 +9,7 @@ function Users({data}) {
   data.map((user)=>{items.push({
     label: user.lastName +" "+user.firstName,
     children: <p><li>Email: {user.email}</li><li>Telefono: + {user.prefix} - {user.phone}</li><li>Rol: {user.role.name}</li><li>Id: {user._id}</li><li>
-      <Link to={`/usuarios/editar/${user._id}`}>
+      <Link to={`/admin/editar/${user._id}`}>
         <Button>Editar</Button>
       </Link>
       <Link to="/usuarios" onClick={()=>usersService.deleteUser(user._id).then(() => {

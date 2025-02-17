@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Button,
-    Cascader,
+    Space,
     Form,
     Input,
     Select,
@@ -96,7 +96,7 @@ function updateUser(data) {
                     rol: "",
                     prefix: userData.prefix
                     //role: JSON.stringify(datosIniciales.data.role)
-    
+
                 }}
                 style={{
                     maxWidth: 600,
@@ -190,9 +190,15 @@ function updateUser(data) {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Actualizar
-                    </Button>
+                    <Space>
+                        <Button type="primary" htmlType="submit">
+                            Actualizar Usuario
+                        </Button>
+
+                        <Button onClick={() => window.location.href = '../../admin'}>
+                            Volver
+                        </Button>
+                    </Space>
                 </Form.Item>
             </Form>
         </>

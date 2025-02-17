@@ -48,7 +48,6 @@ function ComprarObra() {
     }
 
     fetchData().then((show) => {
-
       let opciones = [];
       show.map((s) => {
         console.log(s)
@@ -73,26 +72,22 @@ function ComprarObra() {
             onChange={handleFuncionChange}
             options={opcionesFunciones}
           />
-
         </Form.Item></>,
     },
     {
       title: 'Elegir Asientos',
-      content:
-        <>
-          <Select
-            mode="multiple"
-            allowClear
-            style={{
-              width: '100%',
-            }}
-            placeholder="Please select"
-            defaultValue={[]}
-            onChange={handleSeatsChange}
-            options={asientos}
-          />
-          
-        </>,
+      content: <>
+        <Select
+          mode="multiple"
+          allowClear
+          style={{
+            width: '100%',
+          }}
+          placeholder="Please select"
+          defaultValue={[]}
+          onChange={handleSeatsChange}
+          options={asientos}
+        /></>,
     },
     {
       title: 'Pagar',

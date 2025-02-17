@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { DatePicker, Form, Button, Select } from 'antd';
+import { DatePicker, Form, Button, Select, Space } from 'antd';
 import playsService from '../services/playapi';
 
 const formItemLayout = {
@@ -111,10 +111,14 @@ function createShow(id) {
                         offset: 8,
                     },
                 }}
-            >
-                <Button type="primary" htmlType="submit">
-                    Crear show
-                </Button>
+            ><Space>
+                    <Button type="primary" htmlType="submit">
+                        Crear show
+                    </Button>
+                    <Button onClick={() => window.location.href = '../../admin'}>
+                        Volver
+                    </Button>
+                </Space>
             </Form.Item>
 
         </Form>)

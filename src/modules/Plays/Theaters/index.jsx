@@ -7,17 +7,17 @@ import Theaters from '../../../components/ListTheaters'
 
 function ListTheaters() {
   const [isLoading, setIsLoading] = useState(false)
-  const [plays, setPlays] = useState([])
+  const [theaters, setTheaters] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
       const response = await playsService.getTheaters()
       console.log(response)
-      setPlays(response)
+      setTheaters(response)
       setIsLoading(false)
     }
     fetchData()
-    console.log(JSON.stringify(plays))
+    console.log(JSON.stringify(theaters))
   }, [])
   return (
     <>
@@ -26,7 +26,7 @@ function ListTheaters() {
           <div className="content" />
         </Spin>
       ) : ( 
-          <Theaters data={plays}/>) 
+          <Theaters data={theaters}/>) 
 
 }   
     </>

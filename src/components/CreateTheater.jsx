@@ -114,7 +114,6 @@ function parseSeats(values) {
     let seats = [];
     console.log(values)
     if (values.columnasGeneral > 0 && values.filasGeneral > 0) {
-        console.log("parseo general")
         for (let i = 1; i <= parseInt(values.filasGeneral); i++) {
             for (let j = 1; j <= parseInt(values.columnasGeneral); j++) {
                 seats.push({
@@ -126,7 +125,6 @@ function parseSeats(values) {
         }
     }
     if (values.columnasBaja > 0 && values.filasBaja > 0) {
-        console.log("parseo baja")
         for (let i = 1; i <= parseInt(values.filasBaja); i++) {
             for (let j = 1; j <= parseInt(values.columnasBaja); j++) {
                 seats.push({
@@ -138,7 +136,6 @@ function parseSeats(values) {
         }
     }
     if (values.columnasAlta > 0 && values.filasAlta > 0) {
-        console.log("parseo alta")
         for (let i = 1; i <= parseInt(values.filasAlta); i++) {
             for (let j = 1; j <= parseInt(values.columnasAlta); j++) {
                 seats.push({

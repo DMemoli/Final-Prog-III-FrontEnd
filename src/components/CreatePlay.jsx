@@ -7,7 +7,7 @@ import {
 } from 'antd';
 import {
     UploadOutlined,
-  } from '@ant-design/icons'
+} from '@ant-design/icons'
 import playsService from '../services/playapi'
 import TextArea from 'antd/es/input/TextArea';
 
@@ -43,6 +43,31 @@ const tailFormItemLayout = {
 };
 function createPlay() {
     const [form] = Form.useForm();
+    const [imageBase64, setImageBase64] = useState(null);
+
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
+    // Maneja el cambio del Upload y convierte el archivo a base64
+    const handleFileChange = async (info) => {
+        const file = info.file;
+        if (!file) return;
+        try {
+            const base64 = await getBase64(file.originFileObj);
+            // Actualizamos el campo "imgName" del formulario con la imagen en base64
+            form.setFieldValue('imgName', base64);
+            setImageBase64(base64);
+        } catch (error) {
+            console.error('Error al convertir la imagen a base64', error);
+        }
+    };
+
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
 
@@ -53,7 +78,7 @@ function createPlay() {
         }
         fetchData()
 
-        window.location.href = "/usuarios"
+        window.location.href = "/admin"
     };
 
 

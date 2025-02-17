@@ -11,6 +11,7 @@ import EditarUsuario from './modules/Usuarios/EditarUsuario'
 import CreateUser from './components/CreateUser'
 import Usuarios from './modules/Usuarios'
 import ListShows from './modules/Plays/Shows'
+import EditPlay from './modules/Plays/EditPlay'
 import EditTheaters from './modules/Plays/Theaters/EditTheaters'
 import Comprar from './modules/Comprar'
 import ComprarObra from './modules/Comprar/ComprarObra'
@@ -28,8 +29,7 @@ function App() {
               <Route path=":type" element={<Contact />} />
             </Route>
             <Route path="about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="usuarios">
+            <Route path="admin">
               <Route index element={<Usuarios/>}/>
               <Route path='list' element={<ListarUsuarios/>}/>
               <Route path='create' element={<CreateUser/>}/>
@@ -39,10 +39,14 @@ function App() {
             <Route path="theaters">
               <Route path='edit/:id' element={<EditTheaters/>}/>
             </Route>
+            <Route path="plays">
+              <Route path='edit/:id' element={<EditPlay/>}/>
+            </Route>
             <Route path="comprar">
               <Route index element={<Comprar/>}/>
               <Route path='obra/:id' element={<ComprarObra/>}/>
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

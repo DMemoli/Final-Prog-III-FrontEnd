@@ -1,19 +1,18 @@
 import { Spin } from 'antd'
-import playsService from '../../../../services/playapi'
+import playsService from '../../../services/playapi'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import UpdateTheater from '../../../../components/UpdateTheater'
+import UpdatePlay from '../../../components/UpdatePlay'
 
-function editTheaters() {
+function editPlay() {
   const { id } = useParams()
   const [isLoading, setIsLoading] = useState(false)
-  const [sala, setTheaterInfo] = useState({})
+  const [play, setPlayInfo] = useState({})
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      const response = await playsService.getTheaterById(id)
-      console.log(response)
-      setTheaterInfo(response)
+      const response = await playsService.getPlayById(id)
+      setPlayInfo(response)
       setIsLoading(false)
     }
     fetchData()
@@ -21,13 +20,13 @@ function editTheaters() {
   return (
     <>
       {isLoading ? (
-        <Spin tip="Cargando info del teatro..." size="large">
+        <Spin tip="Cargando info del la obra..." size="large">
           <div className="content" />
         </Spin>
       ) : (
         <div>
           
-          <UpdateTheater data={{sala}} />
+          <UpdatePlay data={{play}} />
         </div>
         
       )}
@@ -35,5 +34,4 @@ function editTheaters() {
   )
 }
 
-export default editTheaters
-//<pre>{JSON.stringify(userInfo, null, 2)}</pre>
+export default editPlay

@@ -9,7 +9,7 @@ const onFinish = (values) => {
     const response = await usersService.login(values)
     console.log(response)
     window.sessionStorage.setItem("token", response.token);
-    window.location.href = "/usuarios"
+    window.location.href = "/admin"
 
 }
 fetchData()

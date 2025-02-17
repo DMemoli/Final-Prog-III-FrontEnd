@@ -17,7 +17,7 @@ function Topbar(){
         <>
         <h1><a href="/">Teatro EJEMPLO</a></h1>
         {(loggedIn)?<><Tooltip title="Ver perfil">
-            <Button href="/usuarios" type="primary" shape="circle" size="large" icon={<UserOutlined />} />
+            <Button href="/admin" type="primary" shape="circle" size="large" icon={<UserOutlined />} />
         </Tooltip><Tooltip title="Cerrar Sesion">
             <Button href="/logout" type="primary" shape="circle" size="large" icon={<LogoutOutlined />} />
         </Tooltip></>:<Tooltip title="Iniciar sesion">
