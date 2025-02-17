@@ -3,6 +3,7 @@ import { Descriptions, Row, Divider, Col, Collapse, Button } from 'antd'
 import playsService from '../../../services/playapi'
 import { useParams, Link } from 'react-router-dom'
 import CreateShow from '../../../components/createShow'
+import SeatsLayout from '../../../components/seatsLayout'
 
 function ListShows() {
   const { id } = useParams()
@@ -63,12 +64,12 @@ function ListShows() {
       shows = [];
       response.performances.map((show) => {
       const theater = response2.find(t => t._id === show.theater_hall);
-      console.log(theater)
         shows.push({
           label: 'Fecha: '+ show.date.slice(0,10) + '   -   Hora: '+ show.date.slice(11,16) +'  -   Sala: '+theater.name,
           children:
             <>
                   <Divider orientation="center">ESCENARIO</Divider>        
+                  <SeatsLayout data={show}/>
                   <li>
                 <Link to={`/funciones/edit/${show._id}`}>
                   <Button>Editar</Button>

@@ -66,7 +66,8 @@ function createShow(id) {
 
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
-        const data = { 'date': values['date'].format(), 'theater_hall': values['theater_hall'], 'seats': theaters[0].seats }
+        const theater = theaters.find(t => t._id === values['theater_hall']);
+        const data = { 'date': values['date'].format(), 'theater_hall': values['theater_hall'], 'seats': theater.seats }
         console.log(data)
         const fetchData = async () => {
             const response = await playsService.createShow(id.data, data)
@@ -75,7 +76,7 @@ function createShow(id) {
         }
         fetchData()
         console.log(id.data)
-        window.location.href = "/shows/" + id.data
+        //window.location.href = "/shows/" + id.data
 
 
     };
