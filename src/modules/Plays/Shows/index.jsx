@@ -62,9 +62,10 @@ function ListShows() {
       }])
       shows = [];
       response.performances.map((show) => {
-      let sala = theaters.map((t)=>{if(t){"test"}})  
+      const theater = response2.find(t => t._id === show.theater_hall);
+      console.log(theater)
         shows.push({
-          label: 'Fecha: '+ show.date.slice(0,10) + '   -   Hora: '+ show.date.slice(11,16) +'  -   Sala: '+sala,
+          label: 'Fecha: '+ show.date.slice(0,10) + '   -   Hora: '+ show.date.slice(11,16) +'  -   Sala: '+theater.name,
           children:
             <>
                   <Divider orientation="center">ESCENARIO</Divider>        
