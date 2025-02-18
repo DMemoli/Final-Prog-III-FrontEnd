@@ -16,4 +16,6 @@ playsService.getTheaterById = (id) => api.get(`/theater/${id}`)
 playsService.createTheater = (data) => api.post(`/theater/`, data)
 playsService.deleteTheater = (id) => api.delete(`/theater/${id}`)
 playsService.updateTheater = (id, data) => api.put(`/theater/${id}`, data)
+playsService.createTicket = (data) => api.post(`/ticket/`, data)
+playsService.getTicketsByClient = (id) => api.get(`/ticket/client/${id}`)
 export default playsService

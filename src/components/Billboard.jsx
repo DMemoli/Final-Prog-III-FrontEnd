@@ -5,7 +5,7 @@ import {
   ShoppingTwoTone,
 } from '@ant-design/icons';
 import playsService from '../services/playapi';
-import Shows from './Shows';
+import { jwtDecode } from "jwt-decode"
 const { Sider, Content } = Layout;
 const contentStyle = {
   height: '90vh',
@@ -58,7 +58,7 @@ const Billboard = () => {
           }}
         ><FloatButton
             type="text"
-            icon={collapsed ? <ShoppingCartOutlined /> : <ShoppingTwoTone />}
+            icon={<ShoppingTwoTone />}
             onClick={() => window.location.href = "/comprar/obra/"+id}
             tooltip={<div>Comprar</div>}
             style={{
@@ -84,21 +84,7 @@ const Billboard = () => {
 
           </Carousel>
         </Content>
-        <Sider
-          reverseArrow='true'
-          collapsible
-          collapsed={collapsed}
-          collapsedWidth='1'
-          onCollapse={(value) => setCollapsed(value)}
-          width="50%"
-        >
-          <div className="demo-logo-vertical" />
-          <div>
-            <h1>{obra.name}</h1>
-            <Shows data={{id: id, play: obra }}/>
-          </div>
-        </Sider>
-      </Layout>
+        </Layout>
     </Layout>
   );
 }; 

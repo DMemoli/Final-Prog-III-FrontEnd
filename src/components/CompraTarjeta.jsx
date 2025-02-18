@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import {
-    AutoComplete,
-    Button,
-    Cascader,
-    Checkbox,
-    Col,
     Form,
     Input,
-    InputNumber,
-    Row,
     Select,
 } from 'antd';
 import usersService from '../services/userapi'
@@ -54,55 +47,31 @@ const tailFormItemLayout = {
     },
 };
 function compraTarjeta(total) {
+    console.log(total)
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
 
         const fetchData = async () => {
             
-            const response = await usersService.createUser(values)
-            console.log(response)
+
         }
         fetchData()
 
-        window.location.href = "/usuarios/list"
+        window.location.href = "/admin"
     };
-    const prefixSelector = (
-        <Form.Item name="prefix" noStyle>
-            <Select
-                style={{
-                    width: 70,
-                }}
-            >
-                <Option value="54">+54</Option>
-                <Option value="1">+1</Option>
-            </Select>
-        </Form.Item>
-    );
+
    
-    const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    const onWebsiteChange = (value) => {
-        if (!value) {
-            setAutoCompleteResult([]);
-        } else {
-            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-        }
-    };
 
     return (
         <>
-        <h1>Pago con tarjeta de credito | Total: </h1>
+        <h1>Pago con tarjeta de credito | Total: {total.data.precio}</h1>
         <Form
             {...formItemLayout}
             form={form}
             name="compra"
             onFinish={onFinish}
             initialValues={{
-                //email: datosIniciales.data.email,
-                //firstName: datosIniciales.data.firstName,
-                //lastName: datosIniciales.data.lastName,
-                //role: JSON.stringify(datosIniciales.data.role)
-                
             }}
             style={{
                 maxWidth: 600,

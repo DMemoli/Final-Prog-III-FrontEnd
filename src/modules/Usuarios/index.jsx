@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Spin } from 'antd'
 import Cliente from "../../components/Cliente";
 import Admin from "../../components/Admin";
+import Home from '../Home'
 
 
 

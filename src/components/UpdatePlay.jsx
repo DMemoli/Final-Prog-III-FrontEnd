@@ -58,7 +58,7 @@ function updatePlay(play) {
         }
         fetchData()
 
-        //window.location.href = "/admin"
+        window.location.href = "/admin"
     };
 
 
@@ -87,7 +87,7 @@ function updatePlay(play) {
                 scrollToFirstError
             >
 
-                <Form.Item
+                <Form.Item 
                     name="name"
                     label="Nombre"
                     rules={[

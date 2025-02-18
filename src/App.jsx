@@ -15,6 +15,7 @@ import EditPlay from './modules/Plays/EditPlay'
 import EditTheaters from './modules/Plays/Theaters/EditTheaters'
 import Comprar from './modules/Comprar'
 import ComprarObra from './modules/Comprar/ComprarObra'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -28,23 +29,26 @@ function App() {
             <Route path="contact" element={<Contact />}>
               <Route path=":type" element={<Contact />} />
             </Route>
-            <Route path="about" element={<About />} />
-            <Route path="admin">
-              <Route index element={<Usuarios/>}/>
-              <Route path='list' element={<ListarUsuarios/>}/>
-              <Route path='create' element={<CreateUser/>}/>
-              <Route path='editar/:id' element={<EditarUsuario/>}/>
+            {/* Rutas protegidas */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="about" element={<About />} />
+              <Route path="admin">
+                <Route index element={<Usuarios />} />
+                <Route path='list' element={<ListarUsuarios />} />
+                <Route path='create' element={<CreateUser />} />
+                <Route path='editar/:id' element={<EditarUsuario />} />
               </Route>
-            <Route path='shows/:id' element={<ListShows/>}></Route>
-            <Route path="theaters">
-              <Route path='edit/:id' element={<EditTheaters/>}/>
-            </Route>
-            <Route path="plays">
-              <Route path='edit/:id' element={<EditPlay/>}/>
-            </Route>
-            <Route path="comprar">
-              <Route index element={<Comprar/>}/>
-              <Route path='obra/:id' element={<ComprarObra/>}/>
+              <Route path='shows/:id' element={<ListShows />}></Route>
+              <Route path="theaters">
+                <Route path='edit/:id' element={<EditTheaters />} />
+              </Route>
+              <Route path="plays">
+                <Route path='edit/:id' element={<EditPlay />} />
+              </Route>
+              <Route path="comprar">
+                <Route index element={<Comprar />} />
+                <Route path='obra/:id' element={<ComprarObra />} />
+              </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>

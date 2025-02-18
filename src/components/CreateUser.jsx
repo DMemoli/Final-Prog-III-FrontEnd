@@ -65,7 +65,7 @@ function createUser() {
         }
         fetchData()
 
-        window.location.href = "/usuarios/list"
+        window.location.href = "/admin"
     };
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -201,7 +201,7 @@ function createUser() {
                     {
                         type: 'array',
                         required: true,
-                        message: 'Please select your habitual residence!',
+                        message: 'Please select role',
                     },
                 ]}
             >

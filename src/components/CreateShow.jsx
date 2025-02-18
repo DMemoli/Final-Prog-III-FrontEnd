@@ -72,11 +72,11 @@ function createShow(id) {
         const fetchData = async () => {
             const response = await playsService.createShow(id.data, data)
             console.log(response)
-
+            
         }
         fetchData()
         console.log(id.data)
-        //window.location.href = "/shows/" + id.data
+        window.location.href = "/shows/" + id.data
 
 
     };
