@@ -11,4 +11,5 @@ nav ul {
   padding-right: 10px;
   list-style: none;
   min-width: 400px;
+  max-width: 100%;
 }

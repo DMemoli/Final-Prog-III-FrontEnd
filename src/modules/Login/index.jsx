@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Divider, Row, Col } from 'antd';
 import usersService from '../../services/userapi';
-
+import RegisterUser from '../../components/RegisterUser';
 const onFinish = (values) => {
   console.log('Success:', values);
   const fetchData = async () => {
@@ -19,6 +19,10 @@ const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 const Login= () => (
+  <>
+  <Row>
+  <Col flex={2}>
+  <Divider orientation="left">Iniciar Sesión</Divider>
   <Form
     name="basic"
     labelCol={{
@@ -75,5 +79,12 @@ const Login= () => (
       </Button>
     </Form.Item>
   </Form>
+  </Col>
+  <Col flex={3}>
+  <Divider orientation="left">Registrarse</Divider>
+      <RegisterUser />
+  </Col>
+    </Row>
+  </>
 );
 export default Login

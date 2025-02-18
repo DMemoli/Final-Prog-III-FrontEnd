@@ -71,9 +71,7 @@ function ListShows() {
                   <Divider orientation="center">ESCENARIO</Divider>        
                   <SeatsLayout data={show}/>
                   <li>
-                <Link to={`/funciones/edit/${show._id}`}>
-                  <Button>Editar</Button>
-                </Link>
+                
                 <Link to={`/shows/${id}`} onClick={() => playsService.deleteShow(show._id, id).then(() => {
                   // Eliminación exitosa, recargar la página
                   window.location.reload();

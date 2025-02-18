@@ -72,11 +72,14 @@ const Billboard = () => {
             {plays.map((x) =><div>
               <div style={textStyle}>
               <Popover  content={<div>
+              <p>Titulo: </p>
               <h1>{x.name}</h1>
-              <h2>{x.plot}</h2>
-              <h3>{x.cast}</h3>
+              <p>Trama: </p>
+              <h3>{x.plot}</h3>
+              <p>Elenco: </p>
+              <h2>{x.cast}</h2>
               </div>} tittle={x.name}>
-              <Button>{x.name}</Button>
+              <Button>Más Información</Button>
               </Popover>
               </div>
               <img style={contentStyle} src={new URL(imgUrl+x.imgName).href}></img>

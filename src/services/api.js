@@ -1,32 +1,34 @@
-import axios from 'axios'
-// import localStorage from './localStorage'
+import axios from 'axios';
+// import localStorage from './localStorage';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/',
-  timeout: 1000 * 15, // 15 sec
+  baseURL: import.meta.env.VITE_BACKENDHOST || 'http://localhost:3001/',
+  timeout: Number(import.meta.env.VITE_BACKENDTIMEOUT) || 15000, // 15 segundos
   // headers: {
   //   Accept: 'application/json',
   //   'Content-Type': 'application/json',
   // },
-})
+});
 
 api.interceptors.request.use(
   (config) => {
-    // const data = localStorage.get() // Before request is sent
-    // if (data) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   config.headers.common.Authorization = `${data.token}`
+    // Si cuentas con un módulo localStorage, descomenta y ajusta este código:
+    // const data = localStorage.get(); // Antes de enviar la solicitud
+    // if (data && data.token) {
+    //   config.headers.common.Authorization = `${data.token}`;
     // }
-    return config
+    return config;
   },
-  (error) => Promise.reject(error) // Do something with request error
-)
+  (error) => Promise.reject(error) // Manejo de errores en la solicitud
+);
 
 api.interceptors.response.use(
-  (response) => response.data, // Do something with response data
-  (error) =>
-    // Do something with response error
-    Promise.reject(console.log(error))
-)
+  (response) => response.data, // Retorna directamente la data de la respuesta
+  (error) => {
+    console.error(error); // Imprime el error en consola
+    return Promise.reject(error); // Rechaza la promesa con el error
+  }
+);
 
-export default api
+export default api;
+

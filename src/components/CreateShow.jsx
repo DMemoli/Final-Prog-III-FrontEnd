@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { DatePicker, Form, Button, Select, Space } from 'antd';
+import { DatePicker, Form, Button, Select, Space, Input } from 'antd';
 import playsService from '../services/playapi';
 
 const formItemLayout = {
@@ -67,12 +67,12 @@ function createShow(id) {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
         const theater = theaters.find(t => t._id === values['theater_hall']);
-        const data = { 'date': values['date'].format(), 'theater_hall': values['theater_hall'], 'seats': theater.seats }
+        const data = { 'date': values['date'].format(), 'theater_hall': values['theater_hall'], 'seats': theater.seats, 'price_general': values['price_general'], 'price_platea_baja': values['price_platea_baja'], 'price_platea_alta': values['price_platea_alta'] }
         console.log(data)
         const fetchData = async () => {
             const response = await playsService.createShow(id.data, data)
             console.log(response)
-            
+
         }
         fetchData()
         console.log(id.data)
@@ -100,6 +100,54 @@ function createShow(id) {
                     optionFilterProp="children"
                     options={theatersOptions}
                 />
+            </Form.Item>
+            <Form.Item
+                name="price_general"
+                label="Entrada general"
+                rules={[
+                    {
+                        type: 'text'
+                    },
+                    {
+                        required: true,
+                        pattern: /^[0-9]{1,9}$/,
+                        message: 'Please input a price(number)',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="price_platea_baja"
+                label="Entrada P. Baja"
+                rules={[
+                    {
+                        type: 'text'
+                    },
+                    {
+                        required: true,
+                        pattern: /^[0-9]{1,9}$/,
+                        message: 'Please input a price(number)',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="price_platea_alta"
+                label="Entrada P. Alta"
+                rules={[
+                    {
+                        type: 'text'
+                    },
+                    {
+                        required: true,
+                        pattern: /^[0-9]{1,9}$/,
+                        message: 'Please input a price(number)',
+                    },
+                ]}
+            >
+                <Input />
             </Form.Item>
             <Form.Item
                 wrapperCol={{

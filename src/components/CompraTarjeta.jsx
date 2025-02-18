@@ -1,148 +1,123 @@
 import React, { useState } from 'react';
-import {
-    Form,
-    Input,
-    Select,
-} from 'antd';
-import usersService from '../services/userapi'
-const { Option } = Select;
-const roles = [
-    {
-        value: 'admin',
-        label: 'Administrador',
-    },
-    {
-        value: 'client',
-        label: 'Cliente',
-    },
-];
+import { Form, Input, Button, Divider } from 'antd';
+import playsService from '../services/playapi';
+
 const formItemLayout = {
-    labelCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 8,
-        },
-    },
-    wrapperCol: {
-        xs: {
-            span: 24,
-        },
-        sm: {
-            span: 16,
-        },
-    },
+    labelCol: { xs: { span: 24 }, sm: { span: 8 } },
+    wrapperCol: { xs: { span: 24 }, sm: { span: 16 } },
 };
+
 const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 16,
-            offset: 8,
-        },
-    },
+    wrapperCol: { xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } },
 };
+
 function compraTarjeta(total) {
-    console.log(total)
     const [form] = Form.useForm();
+
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
-
         const fetchData = async () => {
-            
 
+            const tkt = await playsService.createTicket(total.data)
+            console.log(tkt)
+            //const response = await usersService.createUser(values)
         }
         fetchData()
-
-        window.location.href = "/admin"
+        window.location.href = "/admin";
     };
-
-   
 
     return (
         <>
-        <h1>Pago con tarjeta de credito | Total: {total.data.precio}</h1>
-        <Form
-            {...formItemLayout}
-            form={form}
-            name="compra"
-            onFinish={onFinish}
-            initialValues={{
-            }}
-            style={{
-                maxWidth: 600,
-            }}
-            scrollToFirstError
-        >
-            <Form.Item
-                name="CardNumber"
-                label="Numero de tarjeta de credito"
-                rules={[
-                    {
-                        type: 'text',
-                        message: 'The input is not valid credit card!',
-                    },
-                    {
-                        required: true,
-                        message: 'Please input your credit card',
-                    },
-                ]}
+            <Divider>Pago con tarjeta de crédito | Total: ${total.data.precio}</Divider>
+            <Form
+                {...formItemLayout}
+                form={form}
+                name="compra"
+                onFinish={onFinish}
+                style={{ maxWidth: 600, margin: 'auto' }}
+                scrollToFirstError
             >
-                <Input />
-            </Form.Item>
+                {/* Número de tarjeta de crédito */}
+                <Form.Item
+                    name="cardNumber"
+                    label="Número de Tarjeta de Crédito"
+                    rules={[
+                        { required: true, message: 'Por favor ingrese su número de tarjeta' },
+                        {
+                            pattern: /^[0-9]{13,19}$/,
+                            message: 'Ingrese un número de tarjeta válido (13-19 dígitos)',
+                        },
+                    ]}
+                >
+                    <Input maxLength={19} />
+                </Form.Item>
 
-            <Form.Item
-                name="name"
-                label="Nombre Completo"
-                rules={[
-                    {
-                        type: 'text'
-                    },
-                    {
-                        required: true,
-                        message: 'Please input your name',
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
+                {/* Nombre Completo */}
+                <Form.Item
+                    name="name"
+                    label="Nombre Completo"
+                    rules={[
+                        { required: true, message: 'Por favor ingrese su nombre' },
+                        {
+                            pattern: /^[a-zA-Z\s]+$/,
+                            message: 'El nombre solo debe contener letras y espacios',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
 
-            <Form.Item
-                name="expiraci"
-                label="Fecha de Vencimiento"
-                rules={[
-                    {
-                        type: 'text'
-                    },
-                    {
-                        required: true,
-                        message: 'Please input your name',
-                    },
-                ]}
-            >
-                <Input />
-            </Form.Item>
+                {/* Fecha de Vencimiento */}
+                <Form.Item
+                    name="expirationDate"
+                    label="Fecha de Vencimiento (MM/YY)"
+                    rules={[
+                        { required: true, message: 'Ingrese la fecha de vencimiento' },
+                        {
+                            pattern: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                            message: 'Formato inválido (MM/YY)',
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value) return Promise.resolve();
+                                const [month, year] = value.split('/');
+                                const currentYear = new Date().getFullYear() % 100;
+                                const currentMonth = new Date().getMonth() + 1;
+                                if (parseInt(year, 10) < currentYear || (parseInt(year, 10) === currentYear && parseInt(month, 10) < currentMonth)) {
+                                    return Promise.reject('La tarjeta está vencida');
+                                }
+                                return Promise.resolve();
+                            },
+                        }),
+                    ]}
+                >
+                    <Input placeholder="MM/YY" maxLength={5} />
+                </Form.Item>
 
-            <Form.Item
-                name="securityCode"
-                label="Codigo de seguridad"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your code!',
-                    },
-                ]}
-                hasFeedback
-            >
-                <Input.Password />
-            </Form.Item>
+                {/* Código de Seguridad */}
+                <Form.Item
+                    name="securityCode"
+                    label="Código de Seguridad (CVV)"
+                    rules={[
+                        { required: true, message: 'Ingrese el código de seguridad' },
+                        {
+                            pattern: /^[0-9]{3,4}$/,
+                            message: 'El código debe tener 3 o 4 dígitos',
+                        },
+                    ]}
+                >
+                    <Input.Password maxLength={4} />
+                </Form.Item>
 
-        </Form>
+                {/* Botón de Enviar */}
+                <Form.Item {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit">
+                        Pagar
+                    </Button>
+                </Form.Item>
+            </Form>
         </>
     );
-};
+}
+
 export default compraTarjeta;

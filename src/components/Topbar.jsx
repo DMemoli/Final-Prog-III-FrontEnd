@@ -1,3 +1,4 @@
+
 import { Tooltip, Button} from "antd";
 import {
     UserOutlined,
@@ -6,16 +7,18 @@ import {
   } from '@ant-design/icons'
 import { useEffect, useState } from "react";
 function Topbar(){
+    const [nombreTeatro, setNombreTeatro] = useState("Teatro");
     const [loggedIn, setLoggedIn] = useState([]);
     useEffect(()=>{
         setLoggedIn(window.sessionStorage.getItem("token"))
+        setNombreTeatro(import.meta.env.VITE_NOMBRE_TEATRO || "Ingrese el nombre del teatro en .env");
     }, [])
 
 
     return(
       
         <>
-        <h1><a href="/">Teatro EJEMPLO</a></h1>
+        <h1><a href="/">{nombreTeatro}</a></h1>
         {(loggedIn)?<><Tooltip title="Ver perfil">
             <Button href="/admin" type="primary" shape="circle" size="large" icon={<UserOutlined />} />
         </Tooltip><Tooltip title="Cerrar Sesion">

@@ -49,7 +49,7 @@ function Cliente() {
               onClick={() =>
                 playsService.deleteTicket(t._id).then(() => {
                   // Eliminación exitosa, recargar la página
-                  window.location.reload();
+                  window.location.href = "/admin";
                 })
               }
             >

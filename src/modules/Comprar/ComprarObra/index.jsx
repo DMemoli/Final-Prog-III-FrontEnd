@@ -55,11 +55,10 @@ function ComprarObra() {
       (acc, seatId) => {
         const seatOption = asientos.find((s) => s.value === seatId);
         if (seatOption) {
-          console.log("Asiento:")
-          console.log(seatOption.label);
-          console.log(seatId);
+          console.log(seatOption);
+          console.log(seatId)
           arrayEntradas.push({seatId_ : seatId, seatLabel: seatOption.label          });
-          acc.suma += 7500;
+          acc.suma += seatOption.price;
           acc.entradas.push(
             <Col span={8} key={seatId}>
               <Card title={obra.name} bordered={false}>
@@ -93,14 +92,16 @@ function ComprarObra() {
     const fetchData = async () => {
       const show = await playsService.getShow(value);
       setFuncion(show);
-      return show.seats;
+      console.log(show);
+      return show;
     };
 
-    fetchData().then((seats) => {
-      const opciones = seats
+    fetchData().then((show) => {
+      const opciones = show.seats
         .filter((s) => s.available === true)
         .map((s) => ({
           value: s._id,
+          price: (s.type === "platea_alta"? show.price_platea_alta : s.type === "platea_baja"? show.price_platea_baja : show.price_general),
           label:
             "Fila: " +
             s.row +
@@ -108,7 +109,8 @@ function ComprarObra() {
             s.column +
             " | Tipo de entrada: " +
             s.type +
-            " | Precio: 7.500",
+            " | Precio: " +
+            (s.type === "platea_alta"? show.price_platea_alta : s.type === "platea_baja"? show.price_platea_baja : show.price_general),
         }));
       setAsientos(opciones);
     });
@@ -211,7 +213,7 @@ function ComprarObra() {
                 Next
               </Button>
             )}
-            {current === steps.length - 1 && (
+            {current === steps.length - 99 && ( //cambiar -99 a -1 para que aparezca el boton de done
               <Button type="primary" onClick={() => {
                 const fetchData = async () => {
                   const tkt = await playsService.createTicket(total)
@@ -221,7 +223,7 @@ function ComprarObra() {
                 fetchData()
 
                 message.success("Processing complete!")
-                //window.location.href = "/admin"
+                window.location.href = "/admin"
               }}>
                 Done
               </Button>
