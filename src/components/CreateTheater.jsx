@@ -53,7 +53,7 @@ function createTheater() {
         }
         fetchData()
 
-        //window.location.reload();
+        window.location.reload();
 
     };
     return (
