@@ -10,8 +10,10 @@ import {
     InputNumber,
     Row,
     Select,
+    message,
 } from 'antd';
-import usersService from '../services/userapi'
+import usersService from '../services/userapi';
+
 const { Option } = Select;
 const roles = [
     {
@@ -53,20 +55,26 @@ const tailFormItemLayout = {
         },
     },
 };
+
 function registerUser() {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+
+    const onFinish = async (values) => {
         console.log('Received values of form: ', values);
-
-        const fetchData = async () => {
-            
-            const response = await usersService.createUser(values)
-            console.log(response)
+        try {
+            const response = await usersService.createUser(values);
+            console.log(response);
+            message.success('Usuario registrado exitosamente.');
+            // Redirigir al usuario después de 2 segundos
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 2000);
+        } catch (error) {
+            console.error(error);
+            message.error('Hubo un error al registrar el usuario.');
         }
-        fetchData()
-
-        window.location.href = "/admin"
     };
+
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
             <Select
@@ -79,15 +87,6 @@ function registerUser() {
             </Select>
         </Form.Item>
     );
-   
-    const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    const onWebsiteChange = (value) => {
-        if (!value) {
-            setAutoCompleteResult([]);
-        } else {
-            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-        }
-    };
 
     return (
         <Form
@@ -95,13 +94,7 @@ function registerUser() {
             form={form}
             name="register"
             onFinish={onFinish}
-            initialValues={{
-                //email: datosIniciales.data.email,
-                //firstName: datosIniciales.data.firstName,
-                //lastName: datosIniciales.data.lastName,
-                //role: JSON.stringify(datosIniciales.data.role)
-                
-            }}
+            initialValues={{}}
             style={{
                 maxWidth: 600,
             }}
@@ -113,11 +106,11 @@ function registerUser() {
                 rules={[
                     {
                         type: 'email',
-                        message: 'The input is not valid E-mail!',
+                        message: 'El valor ingresado no es un E-mail válido!',
                     },
                     {
                         required: true,
-                        message: 'Please input your E-mail!',
+                        message: 'Por favor ingresa tu E-mail!',
                     },
                 ]}
             >
@@ -129,11 +122,11 @@ function registerUser() {
                 label="Nombre"
                 rules={[
                     {
-                        type: 'text'
+                        type: 'text',
                     },
                     {
                         required: true,
-                        message: 'Please input your name',
+                        message: 'Por favor ingresa tu nombre',
                     },
                 ]}
             >
@@ -145,11 +138,11 @@ function registerUser() {
                 label="Apellido"
                 rules={[
                     {
-                        type: 'text'
+                        type: 'text',
                     },
                     {
                         required: true,
-                        message: 'Please input your name',
+                        message: 'Por favor ingresa tu apellido',
                     },
                 ]}
             >
@@ -162,7 +155,7 @@ function registerUser() {
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your password!',
+                        message: 'Por favor ingresa tu password!',
                     },
                 ]}
                 hasFeedback
@@ -178,14 +171,14 @@ function registerUser() {
                 rules={[
                     {
                         required: true,
-                        message: 'Please confirm your password!',
+                        message: 'Por favor confirma tu password!',
                     },
                     ({ getFieldValue }) => ({
                         validator(_, value) {
                             if (!value || getFieldValue('password') === value) {
                                 return Promise.resolve();
                             }
-                            return Promise.reject(new Error('The new password that you entered do not match!'));
+                            return Promise.reject(new Error('Los passwords no coinciden!'));
                         },
                     }),
                 ]}
@@ -198,7 +191,7 @@ function registerUser() {
                 label="Phone Number"
                 rules={[
                     {
-                        message: 'Please input your phone number!',
+                        message: 'Por favor ingresa tu número de teléfono!',
                     },
                 ]}
             >
@@ -218,4 +211,5 @@ function registerUser() {
         </Form>
     );
 };
+
 export default registerUser;

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, theme, FloatButton, Carousel, Button, Popover, Divider } from 'antd';
 import {
+  ShoppingCartOutlined,
   ShoppingTwoTone,
 } from '@ant-design/icons';
 import playsService from '../services/playapi';
+import { jwtDecode } from "jwt-decode"
 const { Sider, Content } = Layout;
 const contentStyle = {
   height: '90vh',
@@ -21,7 +23,6 @@ const textStyle = {
 
 const Billboard = () => {
   const imgUrl = 'http://localhost:2000/src/img/';
-  const [collapsed, setCollapsed] = useState(true);
   const [obra, setObra] = useState([]);
   const [id, setId] = useState("");
   const [plays, setPlays] = useState([]);
@@ -66,7 +67,7 @@ const Billboard = () => {
               right: 95,
             }}
           />
-          <Carousel autoplay={collapsed} afterChange={(n) => {setId(plays[n]._id); setObra(plays[n]); setShows(plays[n].performances)}}>
+          <Carousel arrows={true} autoplay={{dotDuration: true,}} autoplaySpeed={1000} afterChange={(n) => {setId(plays[n]._id); setObra(plays[n]); setShows(plays[n].performances)}}>
             {plays.map((x) =><div>
               <div style={textStyle}>
               <Popover  content={<div>
