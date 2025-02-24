@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button, Form, Input} from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import playsService from '../services/playapi';
 
 const formItemLayout = {
@@ -35,25 +35,27 @@ const tailFormItemLayout = {
 };
 function createTheater() {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Received values of form: ', values);
-        let seats = parseSeats(values)
-        let data = []
-        data.push({
-            "name": values.name,
-            "seats": seats
+        try {
+            let seats = parseSeats(values)
+            let data = []
+            data.push({
+                "name": values.name,
+                "seats": seats
 
-        })
-        
-        console.log(data)
-        const fetchData = async () => {
-
+            })
             const response = await playsService.createTheater(data)
             console.log(response)
+            message.success('Sala creada exitosamente');
+            setTimeout(() => {
+                window.location.href = "/admin";
+            }, 1000);
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            message.error('Error al crear la sala, intenta nuevamente');
         }
-        fetchData()
-
-        window.location.reload();
 
     };
     return (
@@ -100,7 +102,7 @@ function createTheater() {
             <Form.Item label="Columnas" name="columnasAlta">
                 <Input />
             </Form.Item>
-            
+
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
                     Crear Sala
@@ -128,7 +130,7 @@ function parseSeats(values) {
         for (let i = 1; i <= parseInt(values.filasBaja); i++) {
             for (let j = 1; j <= parseInt(values.columnasBaja); j++) {
                 seats.push({
-                    "row": (i+parseInt(values.filasGeneral)).toString(),
+                    "row": (i + parseInt(values.filasGeneral)).toString(),
                     "column": j.toString(),
                     "type": "platea_baja"
                 });
@@ -139,7 +141,7 @@ function parseSeats(values) {
         for (let i = 1; i <= parseInt(values.filasAlta); i++) {
             for (let j = 1; j <= parseInt(values.columnasAlta); j++) {
                 seats.push({
-                    "row": (i+parseInt(values.filasGeneral)+parseInt(values.filasBaja)).toString(),
+                    "row": (i + parseInt(values.filasGeneral) + parseInt(values.filasBaja)).toString(),
                     "column": j.toString(),
                     "type": "platea_alta"
                 });

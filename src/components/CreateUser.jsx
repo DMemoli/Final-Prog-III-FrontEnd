@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import {
-    AutoComplete,
+    message,
     Button,
     Cascader,
-    Checkbox,
-    Col,
     Form,
     Input,
-    InputNumber,
-    Row,
     Select,
 } from 'antd';
 import usersService from '../services/userapi'
@@ -55,17 +51,23 @@ const tailFormItemLayout = {
 };
 function createUser() {
     const [form] = Form.useForm();
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Received values of form: ', values);
+        try {
 
-        const fetchData = async () => {
-            
+
             const response = await usersService.createUser(values)
             console.log(response)
-        }
-        fetchData()
+            message.success('Usuario creado exitosamente');
+            setTimeout(() => {
+                window.location.href = "/admin";
+            }, 1000);
 
-        window.location.href = "/admin"
+
+        } catch (error) {
+            console.error(error);
+            message.error('Error al crear el Usuario, '+error);
+        }
     };
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -79,15 +81,7 @@ function createUser() {
             </Select>
         </Form.Item>
     );
-   
-    const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    const onWebsiteChange = (value) => {
-        if (!value) {
-            setAutoCompleteResult([]);
-        } else {
-            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-        }
-    };
+
 
     return (
         <Form
@@ -100,7 +94,7 @@ function createUser() {
                 //firstName: datosIniciales.data.firstName,
                 //lastName: datosIniciales.data.lastName,
                 //role: JSON.stringify(datosIniciales.data.role)
-                
+
             }}
             style={{
                 maxWidth: 600,
